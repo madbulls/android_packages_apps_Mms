@@ -291,6 +291,7 @@
     <string name="saved_ringtone" msgid="6616730290861857836">"着信音を保存しました"</string>
     <string name="saved_ringtone_fail" msgid="5447210504935083544">"着信音の保存に失敗しました"</string>
     <string name="menu_insert_smiley" msgid="4964504393061025071">"絵文字を挿入"</string>
+    <string name="menu_insert_emoji">絵文字を挿入</string>
     <string name="select_link_title" msgid="600168208731216059">"操作を選択"</string>
     <string name="slide_number" msgid="1923958526266726635">"スライド<xliff:g id="NUMBER">%s</xliff:g>"</string>
   <plurals name="slide_duration">
@@ -342,6 +343,9 @@
     <string name="pref_title_mms_use_sent_timestamp">オリジナルの送信時刻を使用</string>
     <string name="pref_summary_mms_use_sent_timestamp">受信日時ではなく、送信日時を保存及び表示する</string>
     <string name="pref_extra_settings">拡張設定</string>
+
+    <string name="pref_title_enable_emojis">絵文字サポート</string>
+    <string name="pref_summary_enable_emojis">ユニコード絵文字サポートを有効にする, 471個のステキな絵文字</string>
 
     <string name="pref_title_mms_back_to_all_threads">スレッド一覧に戻る</string>
     <string name="pref_summary_mms_back_to_all_threads">戻るボタンを押したときは常にすべてのスレッド一覧へ戻る</string>

@@ -292,6 +292,7 @@
     <string name="saved_ringtone" msgid="6616730290861857836">"Sonnerie enregistrée"</string>
     <string name="saved_ringtone_fail" msgid="5447210504935083544">"Échec de l\'enregistrement de la sonnerie"</string>
     <string name="menu_insert_smiley" msgid="4964504393061025071">"Insérer une émoticône"</string>
+    <string name="menu_insert_emoji">Insérer des emojis</string>
     <string name="select_link_title" msgid="600168208731216059">"Sélectionner un élément"</string>
     <string name="slide_number" msgid="1923958526266726635">"Diapositive <xliff:g id="NUMBER">%s</xliff:g>"</string>
   <plurals name="slide_duration">
@@ -339,6 +340,10 @@
 
     <!-- Extra Settings: -->
     <string name="pref_extra_settings">Paramètres supplémentaires</string>
+
+    <!-- Enable emojis -->
+    <string name="pref_title_enable_emojis">Activer Emoji</string>
+    <string name="pref_summary_enable_emojis">Activer la reconnaissance des emojis, 471 beaux émoticônes</string>
 
     <!-- Back to all threads -->
     <string name="pref_title_mms_back_to_all_threads">Retour à la liste des fils</string>

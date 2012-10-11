@@ -292,6 +292,7 @@
     <string name="saved_ringtone" msgid="6616730290861857836">"Dzwonek został zapisany"</string>
     <string name="saved_ringtone_fail" msgid="5447210504935083544">"Zapisanie dzwonka nie powiodło się"</string>
     <string name="menu_insert_smiley" msgid="4964504393061025071">"Wstaw emotikon"</string>
+    <string name="menu_insert_emoji">Wstaw emoji</string>
     <string name="select_link_title" msgid="600168208731216059">"Wybierz akcję"</string>
     <string name="slide_number" msgid="1923958526266726635">"Slajd nr <xliff:g id="NUMBER">%s</xliff:g>"</string>
   <plurals name="slide_duration">
@@ -339,6 +340,10 @@
     
     <!-- Extra Settings: -->
     <string name="pref_extra_settings">Ustawienia dodatkowe</string>
+
+    <!-- Enable emojis -->
+    <string name="pref_title_enable_emojis">Włącz emoji</string>
+    <string name="pref_summary_enable_emojis">Włącz wsparcie dla zestawu 471 unikodowych emotikon emoji</string>
 
     <!-- Back to all threads -->
     <string name="pref_title_mms_back_to_all_threads">Powrót do wszystkich wątków</string>

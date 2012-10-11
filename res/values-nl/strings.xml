@@ -291,6 +291,7 @@
     <string name="saved_ringtone" msgid="6616730290861857836">"Beltoon is opgeslagen"</string>
     <string name="saved_ringtone_fail" msgid="5447210504935083544">"Opslaan van beltoon mislukt"</string>
     <string name="menu_insert_smiley" msgid="4964504393061025071">"Smiley invoegen"</string>
+    <string name="menu_insert_emoji">Emoji invoegen</string>
     <string name="select_link_title" msgid="600168208731216059">"Actie selecteren"</string>
     <string name="slide_number" msgid="1923958526266726635">"Dia <xliff:g id="NUMBER">%s</xliff:g>"</string>
   <plurals name="slide_duration">
@@ -348,6 +349,8 @@
     <string name="label_mms_push">Mms forceren</string>
     <string name="desc_mms_push">Mms forceren van Postvak UIT naar het netwerk</string>
     <string name="pref_extra_settings">Extra instellingen</string>
+    <string name="pref_title_enable_emojis">Emoji</string>
+    <string name="pref_summary_enable_emojis">Unicode-emoji\'s, 471 leuke smiley\'s, inschakelen</string>
     <string name="pref_title_mms_back_to_all_threads">Terug naar conversaties</string>
     <string name="pref_summary_mms_back_to_all_threads">Altijd terug naar alle conversaties als terugknop wordt ingedrukt</string>
     <string name="pref_title_mms_black_background">Donkere achtergrond</string>

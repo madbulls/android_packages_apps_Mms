@@ -335,4 +335,7 @@
     <string name="sending_message" msgid="222836893217450538">"Sender..."</string>
     <string name="error_state" msgid="5177386717626893507">"Svingende tilstand"</string>
     <string name="error_state_text" msgid="5006221625000536698">"Tilstanden af tråde og modtagere er svingende. Opret en fejlrapport, og send den til android-sms-bugs@google.com"</string>
+    <string name="menu_insert_emoji">Indsæt emojis</string>
+    <string name="pref_title_enable_emojis">Emoji-understøttelse</string>
+    <string name="pref_summary_enable_emojis">Slå understøttelse af Unicode-emojis til, et sæt af 471 flotte smileys</string>
 </resources>
