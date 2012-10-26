@@ -370,7 +370,8 @@ public class DeliveryReportActivity extends ListActivity {
             return mRecipient;
         }
 
-        public boolean isDeliveryReportRequested() {
+        @SuppressWarnings("unused")
+		public boolean isDeliveryReportRequested() {
             return mIsDeliveryReportRequsted;
         }
 

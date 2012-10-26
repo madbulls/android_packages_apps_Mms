@@ -17,7 +17,6 @@
 
 package com.android.mms.transaction;
 
-import com.android.mms.R;
 import com.android.mms.ui.MessagingPreferenceActivity;
 
 import org.apache.http.HttpEntity;
@@ -56,7 +55,8 @@ public class HttpUtils {
     private static final String TAG = LogTag.TRANSACTION;
 
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     public static final int HTTP_POST_METHOD = 1;
     public static final int HTTP_GET_METHOD = 2;

@@ -58,7 +58,8 @@ public class DrmWrapper {
      */
     private static final String LOG_TAG = "DrmWrapper";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     /**
      * Constructor.

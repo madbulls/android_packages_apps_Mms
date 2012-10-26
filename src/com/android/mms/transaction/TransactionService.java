@@ -79,6 +79,7 @@ import java.util.ArrayList;
  * the MMS transaction until the connection is established.</li>
  * </ul>
  */
+@SuppressWarnings("deprecation")
 public class TransactionService extends Service implements Observer {
     private static final String TAG = "TransactionService";
 
@@ -416,7 +417,10 @@ public class TransactionService extends Service implements Observer {
                         case Transaction.RETRIEVE_TRANSACTION:
                             // We're already in a non-UI thread called from
                             // NotificationTransacation.run(), so ok to block here.
-                            MessagingNotification.blockingUpdateNewMessageIndicator(this, true,
+                            long threadId = MessagingNotification.getThreadId(
+                                    this, state.getContentUri());
+                            MessagingNotification.blockingUpdateNewMessageIndicator(this,
+                                    threadId,
                                     false);
                             MessagingNotification.updateDownloadFailedNotification(this);
                             break;

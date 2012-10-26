@@ -58,7 +58,8 @@ import java.util.Arrays;
 public class SmilHelper {
     private static final String TAG = "Mms/smil";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     public static final String ELEMENT_TAG_TEXT = "text";
     public static final String ELEMENT_TAG_IMAGE = "img";
@@ -167,7 +168,8 @@ public class SmilHelper {
                   .replaceAll("'", "&apos;");
     }
 
-    private static SMILDocument createSmilDocument(PduBody pb) {
+    @SuppressWarnings("deprecation")
+	private static SMILDocument createSmilDocument(PduBody pb) {
         if (Config.LOGV) {
             Log.v(TAG, "Creating default SMIL document.");
         }
@@ -254,7 +256,8 @@ public class SmilHelper {
         return document;
     }
 
-    private static SMILDocument createSmilDocument(SlideshowModel slideshow) {
+    @SuppressWarnings("deprecation")
+	private static SMILDocument createSmilDocument(SlideshowModel slideshow) {
         if (Config.LOGV) {
             Log.v(TAG, "Creating SMIL document from SlideshowModel.");
         }

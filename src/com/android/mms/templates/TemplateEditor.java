@@ -2,8 +2,6 @@
 package com.android.mms.templates;
 
 import java.util.ArrayList;
-import java.util.Set;
-
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.gesture.Gesture;
@@ -12,7 +10,6 @@ import android.gesture.GestureOverlayView;
 import android.gesture.Prediction;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -80,8 +77,6 @@ public class TemplateEditor extends Activity {
     public static final int DISPLAY_TYPE_EDIT_TEMPLATE = 2;
 
     private static final String KEY_GESTURE = "gesture";
-
-    private static final String LOG_TAG = TemplateEditor.class.getCanonicalName();
 
     private static final float LENGTH_THRESHOLD = 120.0f;
 

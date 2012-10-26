@@ -35,9 +35,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.preference.CheckBoxPreference;
 import android.provider.SearchRecentSuggestions;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -68,16 +68,22 @@ public class MessagingPreferenceActivity extends PreferenceActivity {
     public static final String MMS_SAVE_LOCATION        = "pref_save_location";
     public static final String AUTO_DELETE              = "pref_key_auto_delete";
     public static final String BLACK_BACKGROUND         = "pref_key_mms_black_background";
+    public static final String TRANSPARENT_BACKGROUND   = "pref_key_mms_transparent_background";
+    public static final String BUBBLE_SPEECH            = "pref_key_mms_bubble_speech";
     public static final String BACK_TO_ALL_THREADS      = "pref_key_mms_back_to_all_threads";
-    public static final String ENABLE_EMOJIS            = "pref_key_enable_emojis";
     public static final String SEND_ON_ENTER            = "pref_key_mms_send_on_enter";
     public static final String USER_AGENT               = "pref_key_mms_user_agent";
     public static final String USER_AGENT_CUSTOM        = "pref_key_mms_user_agent_custom";
+    public static final String ENABLE_EMOJIS            = "pref_key_enable_emojis";
+    public static final String HIDE_AVATAR_PP            = "pref_key_mms_hide_avatar";
+    public static final String STRIP_UNICODE            = "pref_key_strip_unicode";
     public static final String FULL_TIMESTAMP           = "pref_key_mms_full_timestamp";
     public static final String ONLY_MOBILE_NUMBERS      = "pref_key_mms_only_mobile_numbers";
     public static final String SENT_TIMESTAMP           = "pref_key_mms_use_sent_timestamp";
     public static final String SENT_TIMESTAMP_GMT_CORRECTION = "pref_key_mms_use_sent_timestamp_gmt_correction";
     public static final String MESSAGE_FONT_SIZE     = "pref_key_mms_message_font_size";
+    public static final String CONVO_FROM_FONT_SIZE     = "pref_key_mms_convo_from_font_size";
+    public static final String CONVO_SUBJECT_FONT_SIZE     = "pref_key_mms_convo_subject_font_size";
     public static final String EMAIL_ADDR_COMPLETION        = "pref_key_mms_email_addr_completion";
     public static final String NOTIFICATION_VIBRATE_PATTERN = "pref_key_mms_notification_vibrate_pattern";
     public static final String NOTIFICATION_VIBRATE_PATTERN_CUSTOM = "pref_key_mms_notification_vibrate_pattern_custom";
@@ -86,6 +92,7 @@ public class MessagingPreferenceActivity extends PreferenceActivity {
     public static final String SHOW_GESTURE = "pref_key_templates_show_gesture";
     public static final String GESTURE_SENSITIVITY = "pref_key_templates_gestures_sensitivity";
     public static final String GESTURE_SENSITIVITY_VALUE = "pref_key_templates_gestures_sensitivity_value";
+    public static final String ENABLE_SMS_POPUP            = "pref_key_mms_enable_sms_popup";
 
     // Menu entries
     private static final int MENU_RESTORE_DEFAULTS    = 1;
@@ -101,6 +108,11 @@ public class MessagingPreferenceActivity extends PreferenceActivity {
     private Preference mManageTemplate;
     private Recycler mSmsRecycler;
     private Recycler mMmsRecycler;
+    private CheckBoxPreference mHideAvatarPref;
+    private CheckBoxPreference mEnableSmsPopupPref;
+    private CheckBoxPreference mBlackBackgroundPref;
+    private CheckBoxPreference mTransparentBackgroundPref;
+    private CheckBoxPreference mBubbleSpeechPref;
     private ListPreference mGestureSensitivity;
 
     private static final int CONFIRM_CLEAR_SEARCH_HISTORY_DIALOG = 3;
@@ -121,9 +133,15 @@ public class MessagingPreferenceActivity extends PreferenceActivity {
         mMmsReadReportPref = findPreference("pref_key_mms_read_reports");
         mMmsLimitPref = findPreference("pref_key_mms_delete_limit");
         mClearHistoryPref = findPreference("pref_key_mms_clear_history");
+        mHideAvatarPref = (CheckBoxPreference)findPreference("pref_key_mms_hide_avatar");
+        mEnableSmsPopupPref = (CheckBoxPreference)findPreference("pref_key_mms_enable_sms_popup");
+        mBlackBackgroundPref = (CheckBoxPreference)findPreference("pref_key_mms_black_background");
+        mTransparentBackgroundPref = (CheckBoxPreference)findPreference("pref_key_mms_transparent_background");
+        mBubbleSpeechPref = (CheckBoxPreference)findPreference("pref_key_mms_bubble_speech");
         mVibrateWhenPref = (ListPreference) findPreference(NOTIFICATION_VIBRATE_WHEN);
         mManageTemplate = findPreference(MANAGE_TEMPLATES);
         mGestureSensitivity = (ListPreference) findPreference(GESTURE_SENSITIVITY);
+        mEnableSmsPopupPref.setChecked(Settings.System.getInt(getContentResolver(), Settings.System.USE_POPUP_SMS, 1) == 1);
 
         if (!MmsApp.getApplication().getTelephonyManager().hasIccCard()) {
             // No SIM card, remove the SIM-related prefs
@@ -181,7 +199,6 @@ public class MessagingPreferenceActivity extends PreferenceActivity {
 
         mManageTemplate.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
-            @Override
             public boolean onPreferenceClick(Preference preference) {
                 Intent intent = new Intent(MessagingPreferenceActivity.this,
                         TemplatesListActivity.class);
@@ -196,7 +213,6 @@ public class MessagingPreferenceActivity extends PreferenceActivity {
         mGestureSensitivity.setValue(gestureSensitivity);
         mGestureSensitivity.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
-            @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 int value = Integer.parseInt((String) newValue);
                 sharedPreferences.edit().putInt(GESTURE_SENSITIVITY_VALUE, value).commit();
@@ -245,6 +261,7 @@ public class MessagingPreferenceActivity extends PreferenceActivity {
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
             Preference preference) {
+        boolean value;
         if (preference == mSmsLimitPref) {
             new NumberPickerDialog(this,
                     mSmsLimitListener,
@@ -261,6 +278,44 @@ public class MessagingPreferenceActivity extends PreferenceActivity {
                     R.string.pref_title_mms_delete).show();
         } else if (preference == mManageSimPref) {
             startActivity(new Intent(this, ManageSimMessages.class));
+        } else if (preference == mHideAvatarPref) {
+            value = mHideAvatarPref.isChecked();
+            if (value) {
+               mHideAvatarPref.setChecked(true);
+            } else {
+               mHideAvatarPref.setChecked(false);
+            }
+        } else if (preference == mEnableSmsPopupPref) {
+            value = mEnableSmsPopupPref.isChecked();
+            Settings.System.putInt(getContentResolver(), Settings.System.USE_POPUP_SMS, value ? 1: 0);
+            mEnableSmsPopupPref.setChecked(value ? true : false);
+        } else if (preference == mBlackBackgroundPref) {
+            value = mBlackBackgroundPref.isChecked();
+            if (value) {
+               mBlackBackgroundPref.setChecked(true);
+               mTransparentBackgroundPref.setChecked(false);
+               mBubbleSpeechPref.setChecked(false);
+            } else {
+               mBlackBackgroundPref.setChecked(false);
+            }
+        } else if (preference == mTransparentBackgroundPref) {
+            value = mTransparentBackgroundPref.isChecked();
+            if (value) {
+               mBlackBackgroundPref.setChecked(false);
+               mTransparentBackgroundPref.setChecked(true);
+               mBubbleSpeechPref.setChecked(false);
+            } else {
+               mTransparentBackgroundPref.setChecked(false);
+            }
+        } else if (preference == mBubbleSpeechPref) {
+            value = mBubbleSpeechPref.isChecked();
+            if (value) {
+               mBlackBackgroundPref.setChecked(false);
+               mTransparentBackgroundPref.setChecked(false);
+               mBubbleSpeechPref.setChecked(true);
+            } else {
+               mBubbleSpeechPref.setChecked(false);
+            }
         } else if (preference == mClearHistoryPref) {
             showDialog(CONFIRM_CLEAR_SEARCH_HISTORY_DIALOG);
             return true;
@@ -294,7 +349,8 @@ public class MessagingPreferenceActivity extends PreferenceActivity {
             }
     };
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case CONFIRM_CLEAR_SEARCH_HISTORY_DIALOG:

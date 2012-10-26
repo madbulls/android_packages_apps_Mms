@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.provider.Telephony.Mms;
 import android.telephony.SmsManager;
@@ -67,7 +66,7 @@ public class SmsSingleRecipientSender extends SmsMessageSender {
         ArrayList<PendingIntent> deliveryIntents =  new ArrayList<PendingIntent>(messageCount);
         ArrayList<PendingIntent> sentIntents = new ArrayList<PendingIntent>(messageCount);
         for (int i = 0; i < messageCount; i++) {
-            if (mRequestDeliveryReport) {
+            if (mRequestDeliveryReport && (i == (messageCount - 1))) {
                 // TODO: Fix: It should not be necessary to
                 // specify the class in this intent.  Doing that
                 // unnecessarily limits customizability.
@@ -79,6 +78,8 @@ public class SmsSingleRecipientSender extends SmsMessageSender {
                                 mContext,
                                 MessageStatusReceiver.class),
                         0));
+            } else {
+                deliveryIntents.add(null);
             }
             Intent intent  = new Intent(SmsReceiverService.MESSAGE_SENT_ACTION,
                     mUri,

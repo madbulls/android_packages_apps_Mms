@@ -39,8 +39,8 @@ import com.google.android.mms.pdu.PduParser;
 import com.google.android.mms.pdu.PduPersister;
 import android.database.sqlite.SqliteWrapper;
 
+import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Inbox;
@@ -69,7 +69,8 @@ import java.io.IOException;
 public class NotificationTransaction extends Transaction implements Runnable {
     private static final String TAG = "NotificationTransaction";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     private Uri mUri;
     private NotificationInd mNotificationInd;
@@ -172,6 +173,13 @@ public class NotificationTransaction extends Transaction implements Runnable {
                     // Save the received PDU (must be a M-RETRIEVE.CONF).
                     PduPersister p = PduPersister.getPduPersister(mContext);
                     Uri uri = p.persist(pdu, Inbox.CONTENT_URI);
+
+                    // Use local time instead of PDU time
+                    ContentValues values = new ContentValues(1);
+                    values.put(Mms.DATE, System.currentTimeMillis() / 1000L);
+                    SqliteWrapper.update(mContext, mContext.getContentResolver(),
+                            uri, values, null, null);
+
                     // We have successfully downloaded the new MM. Delete the
                     // M-NotifyResp.ind from Inbox.
                     SqliteWrapper.delete(mContext, mContext.getContentResolver(),

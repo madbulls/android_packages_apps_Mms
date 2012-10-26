@@ -49,7 +49,8 @@ public class SmilRegionElementImpl extends SmilElementImpl implements
     private static final String FIT_ATTRIBUTE_NAME = "fit";
     private static final String TAG = "SmilRegionElementImpl";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     SmilRegionElementImpl(SmilDocumentImpl owner, String tagName) {
         super(owner, tagName);

@@ -27,6 +27,7 @@ import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu.PduBody;
 import com.google.android.mms.pdu.PduPart;
 
+import org.w3c.dom.smil.ElementTime;
 import org.w3c.dom.smil.SMILMediaElement;
 import org.w3c.dom.smil.SMILRegionElement;
 import org.w3c.dom.smil.SMILRegionMediaElement;
@@ -240,7 +241,7 @@ public class MediaModelFactory {
              * If not, the media will disappear while rotating the screen
              * in the slide show play view.
              */
-            media.setFill(sme.FILL_FREEZE);
+            media.setFill(ElementTime.FILL_FREEZE);
         } else {
             // Set 'fill' property.
             media.setFill(sme.getFill());

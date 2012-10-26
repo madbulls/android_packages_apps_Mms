@@ -50,7 +50,8 @@ import java.lang.ref.SoftReference;
 public class ImageModel extends RegionMediaModel {
     private static final String TAG = "Mms/image";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     private static final int THUMBNAIL_BOUNDS_LIMIT = 480;
 
@@ -200,9 +201,6 @@ public class ImageModel extends RegionMediaModel {
     @Override
     protected void resizeMedia(int byteLimit, long messageId) throws MmsException {
         UriImage image = new UriImage(mContext, getUri());
-        if (image == null) {
-            throw new ExceedMessageSizeException("No room to resize picture: " + getUri());
-        }
         PduPart part = image.getResizedImageAsPart(
                 MmsConfig.getMaxImageWidth(),
                 MmsConfig.getMaxImageHeight(),

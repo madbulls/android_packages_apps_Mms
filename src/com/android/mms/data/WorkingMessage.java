@@ -62,8 +62,6 @@ import com.google.android.mms.pdu.PduBody;
 import com.google.android.mms.pdu.PduPersister;
 import com.google.android.mms.pdu.SendReq;
 
-import android.telephony.SmsMessage;
-
 /**
  * Contains all state related to a message being edited by the user.
  */

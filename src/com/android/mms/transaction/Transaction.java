@@ -22,8 +22,6 @@ import com.android.mms.util.SendingProgressTokenManager;
 import android.content.Context;
 import android.net.Uri;
 import android.net.ConnectivityManager;
-import android.util.Log;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;

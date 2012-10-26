@@ -18,7 +18,6 @@
 package com.android.mms.ui;
 
 import com.android.mms.R;
-import com.android.mms.LogTag;
 import com.android.mms.data.Conversation;
 
 import android.content.Context;
@@ -40,6 +39,7 @@ public class ConversationListAdapter extends CursorAdapter implements AbsListVie
     private static final String TAG = "ConversationListAdapter";
     private static final boolean LOCAL_LOGV = false;
     private boolean mBlackBackground;
+    private boolean mTransparentBackground;
 
     private final LayoutInflater mFactory;
     private OnContentChangedListener mOnContentChangedListener;
@@ -72,10 +72,13 @@ public class ConversationListAdapter extends CursorAdapter implements AbsListVie
         if (LOCAL_LOGV) Log.v(TAG, "inflating new view");
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         mBlackBackground = prefs.getBoolean(MessagingPreferenceActivity.BLACK_BACKGROUND, false);
-        if (!mBlackBackground) {
-          return mFactory.inflate(R.layout.conversation_list_item, parent, false);
-        } else {
+        mTransparentBackground = prefs.getBoolean(MessagingPreferenceActivity.TRANSPARENT_BACKGROUND, false);
+        if (mBlackBackground) {
           return mFactory.inflate(R.layout.conversation_list_item_black, parent, false);
+        } else if (mTransparentBackground) {
+          return mFactory.inflate(R.layout.conversation_list_item_transparent, parent, false);
+        } else {
+          return mFactory.inflate(R.layout.conversation_list_item, parent, false);
         }
     }
 

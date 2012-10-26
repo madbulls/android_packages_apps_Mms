@@ -23,12 +23,12 @@ import com.android.mms.util.DownloadManager;
 import com.android.mms.util.Recycler;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu.AcknowledgeInd;
+import com.google.android.mms.pdu.EncodedStringValue;
 import com.google.android.mms.pdu.PduComposer;
 import com.google.android.mms.pdu.PduHeaders;
 import com.google.android.mms.pdu.PduParser;
 import com.google.android.mms.pdu.PduPersister;
 import com.google.android.mms.pdu.RetrieveConf;
-import com.google.android.mms.pdu.EncodedStringValue;
 import android.database.sqlite.SqliteWrapper;
 
 import android.content.ContentValues;
@@ -37,6 +37,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Inbox;
+import android.text.TextUtils;
 import android.util.Config;
 import android.util.Log;
 
@@ -58,7 +59,8 @@ import java.io.IOException;
 public class RetrieveTransaction extends Transaction implements Runnable {
     private static final String TAG = "RetrieveTransaction";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     private final Uri mUri;
     private final String mContentLocation;
@@ -150,6 +152,12 @@ public class RetrieveTransaction extends Transaction implements Runnable {
                 PduPersister persister = PduPersister.getPduPersister(mContext);
                 msgUri = persister.persist(retrieveConf, Inbox.CONTENT_URI);
 
+                // Use local time instead of PDU time
+                ContentValues values = new ContentValues(1);
+                values.put(Mms.DATE, System.currentTimeMillis() / 1000L);
+                SqliteWrapper.update(mContext, mContext.getContentResolver(),
+                        msgUri, values, null, null);
+
                 // The M-Retrieve.conf has been successfully downloaded.
                 mTransactionState.setState(TransactionState.SUCCESS);
                 mTransactionState.setContentUri(msgUri);
@@ -196,19 +204,59 @@ public class RetrieveTransaction extends Transaction implements Runnable {
                     String.valueOf(PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF) };
             Cursor cursor = SqliteWrapper.query(
                     context, context.getContentResolver(),
-                    Mms.CONTENT_URI, new String[] { Mms._ID },
+                    Mms.CONTENT_URI, new String[] { Mms._ID, Mms.SUBJECT, Mms.SUBJECT_CHARSET },
                     selection, selectionArgs, null);
             if (cursor != null) {
                 try {
                     if (cursor.getCount() > 0) {
                         // We already received the same message before.
-                        return true;
+                        return isDuplicateMessageExtra(cursor, rc);
                     }
                 } finally {
                     cursor.close();
                 }
             }
         }
+        return false;
+    }
+
+    private static boolean isDuplicateMessageExtra(Cursor cursor, RetrieveConf rc) {
+        // Compare message subjects, taking encoding into account
+        EncodedStringValue encodedSubjectReceived = null;
+        EncodedStringValue encodedSubjectStored = null;
+        String subjectReceived = null;
+        String subjectStored = null;
+        String subject = null;
+
+        encodedSubjectReceived = rc.getSubject();
+        if (encodedSubjectReceived != null) {
+            subjectReceived = encodedSubjectReceived.getString();
+        }
+	
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            int subjectIdx = cursor.getColumnIndex(Mms.SUBJECT);
+            int charsetIdx = cursor.getColumnIndex(Mms.SUBJECT_CHARSET);
+            subject = cursor.getString(subjectIdx);
+            int charset = cursor.getInt(charsetIdx);
+            if (subject != null) {
+                encodedSubjectStored = new EncodedStringValue(charset, PduPersister
+                        .getBytes(subject));
+            }
+            if (encodedSubjectStored == null && encodedSubjectReceived == null) {
+                // Both encoded subjects are null - return true
+                return true;
+            } else if (encodedSubjectStored != null && encodedSubjectReceived != null) {
+                subjectStored = encodedSubjectStored.getString();
+                if (!TextUtils.isEmpty(subjectStored) && !TextUtils.isEmpty(subjectReceived)) {
+                    // Both decoded subjects are non-empty - compare them
+                    return subjectStored.equals(subjectReceived);
+                } else if (TextUtils.isEmpty(subjectStored) && TextUtils.isEmpty(subjectReceived)) {
+                    // Both decoded subjects are "" - return true
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 

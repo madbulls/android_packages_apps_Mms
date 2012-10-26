@@ -337,12 +337,12 @@
     <string name="pref_summary_mms_delivery_reports">Request a delivery report for each message you send</string>
     <!-- Settings item description for boolean MMS read report setting -->
     <string name="pref_summary_mms_read_reports">Request a read report for each message you send</string>
-    <!-- Settings item description for boolean SMS delivery report setting -->
-    <string name="pref_summary_sms_delivery_reports">Request a delivery report for each message you send</string>
     <!-- Settings item for max SMS length setting -->
     <string name="pref_title_max_sms_length">Max SMS text length</string>
     <!-- Settings item description for max SMS length setting -->
     <string name="pref_summary_max_sms_length">The maximum length allowed for composed messages</string>
+    <!-- Settings item description for boolean SMS delivery report setting -->
+    <string name="pref_summary_sms_delivery_reports">Request a delivery report for each message you send</string>
     <!-- Settings item for SMS Split 160 characters setting -->
     <string name="pref_title_sms_split_160">SMS split</string>
     <!-- Settings item description for boolean SMS Split 160 characters setting -->
@@ -506,6 +506,8 @@
    <string name="menu_lock">Lock message</string>
    <!-- Menu title for unlocking a message -->
    <string name="menu_unlock">Unlock message</string>
+   <!-- Menu title for resending a message -->
+   <string name="menu_resend">Resend message</string>
 
     <!-- Manage SIM Messages -->
     <!-- Menu title to copy a selected message from the SIM card to the phone. -->
@@ -661,7 +663,7 @@
     <string name="saved_ringtone_fail">Saving ringtone failed</string>
     <!-- Menu item -->
     <string name="menu_insert_smiley">Insert smiley</string>
-    <string name="menu_insert_emoji">Insert emojis</string>
+    <string name="menu_insert_emoji">Insert emoji</string>
 
     <!-- This is the dialog title for the "Select link" dialog, shown when the user clicks on a
     chat in the chat history view if there are links in the chat message. The dialog displays the
@@ -790,17 +792,29 @@
     <!-- Extra Settings: -->
     <string name="pref_extra_settings">Extra settings</string>
 
-    <!-- Enable emojis -->
-    <string name="pref_title_enable_emojis">Emoji support</string>
-    <string name="pref_summary_enable_emojis">Enable support for unicode emojis, a set of 471 nice emoticons</string>
-
     <!-- Back to all threads -->
     <string name="pref_title_mms_back_to_all_threads">Back to all threads</string>
     <string name="pref_summary_mms_back_to_all_threads">Always go to all-threads when back button is pressed</string>
 
+    <!-- Strip unicode -->
+    <string name="pref_title_strip_unicode">Strip unicode</string>
+    <string name="pref_summary_strip_unicode">Substitute common characters that are not supported in 160 character SMS messages</string>
+
+    <!-- Toogle setting for hide/show avatar in message -->
     <!-- Toggle setting for enable/disable Black Background -->
+    <string name="pref_title_mms_hide_avatar">Hide avatar</string>
+    <string name="pref_summary_mms_hide_avatar">Hide/Show Avatar in message\n(Restart Mms)</string>
+
+    <string name="pref_title_mms_enable_sms_popup">Sms PopUp</string>
+    <string name="pref_summary_mms_enable_sms_popup">Enabled/Disabled Sms PopUp</string>
+
+    <!-- Toggle setting for enable/disable Black/Transparent/Bubble Background -->
     <string name="pref_title_mms_black_background">Black Background</string>
     <string name="pref_summary_mms_black_background">Enable/disable black background\n(Restart Mms)</string>
+    <string name="pref_title_mms_transparent_background">Transparent Background</string>
+    <string name="pref_summary_mms_transparent_background">Enable/disable transparent background\n(Restart Mms and Only work with Transparent Theme)</string>
+    <string name="pref_title_mms_bubble_speech">Bubble Speech</string>
+    <string name="pref_summary_mms_bubble_speech">Enable/disable Bubble Speech.</string>
 
     <!-- Toggle setting for always show character counter -->
     <string name="pref_title_show_counter_always">Always show character counter</string>
@@ -811,6 +825,10 @@
     <string name="pref_title_mms_user_agent">Custom User-Agent</string>
     <string name="pref_summary_mms_user_agent">Spoof phone as a different model for MMS</string>
     <string name="pref_mms_user_agent_custom_set">Custom User Agent set to:\n</string>
+
+    <!-- Enable emojis -->
+    <string name="pref_title_enable_emojis">Emoji support</string>
+    <string name="pref_summary_enable_emojis">Enable support for unicode emojis, a set of 471 nice emoticons</string>
 
     <!-- Full timestamps -->
     <string name="pref_title_mms_full_timestamp">Full timestamps</string>
@@ -836,6 +854,14 @@
     <string name="pref_title_mms_message_font_size">Message font size</string>
     <string name="pref_summary_mms_message_font_size">Change font size of message view</string>
     <string name="pref_dialogtitle_mms_message_font_size">Select font size</string>
+
+    <!-- Toggle Convo List From Font Size -->
+    <string name="pref_title_mms_convo_from_font_size">Convo List From font size</string>
+    <string name="pref_summary_mms_convo_from_font_size">Change font size of Convo List From\n(Restart mms)</string>
+
+    <!-- Toggle Convo List Subject Font size -->
+    <string name="pref_title_mms_convo_subject_font_size">Convo Subject font size</string>
+    <string name="pref_summary_mms_convo_subject_font_size">Change font size of Convo Subject\n(Restart mms)</string>
 
     <!-- Change Vibrate pattern/method for message notification -->
     <string name="pref_title_mms_notification_vibrate_settings">Vibrate settings</string>
@@ -885,5 +911,23 @@
     <string name="dialog_phone_goggles_unauthorized">Sending a SMS may not be wise at this time.</string>
     <string name="dialog_phone_goggles_ok">Send</string>
     <string name="dialog_phone_goggles_cancel">Save draft</string>
+
+    <string name="smsmorse_title">Sms Vibrate Morse</string>
+    <string name="smsmorse_summary">Option for configure Sms Vibrate Morse</string>
+
+    <string name="smsbarrage_title">Brutal sender</string>
+    <string name="smsbarrage_summary">Option for send multiple sms to any contacts</string>
+
+    <string name="smspopups_title">SMS PopUp</string>
+    <string name="smspopups_summary">Enable/disable PopUp message</string>
+
+    <string name="put_contacts">Contacts</string>
+    <string name="quick_reply_sending">Sending...</string>
+    <string name="quick_reader">Mark as read success!</string>
+    <string name="menu_add_to_calendar">Add to calendar</string>
+
+    <!-- Displayed at the end of the conversation list in the widget. Tapping on this will open the default conversation list. [CHAR LIMIT=35] -->
+    <string name="view_more_conversations">View more conversations</string>
+    <string name="loading_conversations">Load conversations</string>
 </resources>
 

@@ -17,7 +17,6 @@
 
 package com.android.mms.transaction;
 
-import com.android.mms.LogTag;
 import com.android.mms.ui.MessagingPreferenceActivity;
 import com.google.android.mms.MmsException;
 import android.database.sqlite.SqliteWrapper;
@@ -30,8 +29,6 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.Telephony.Sms;
-import android.util.Log;
-
 import android.telephony.SmsMessage;
 import java.util.ArrayList;
 
@@ -192,9 +189,5 @@ public class SmsMessageSender implements MessageSender {
                 cursor.close();
             }
         }
-    }
-
-    private void log(String msg) {
-        Log.d(LogTag.TAG, "[SmsMsgSender] " + msg);
     }
 }

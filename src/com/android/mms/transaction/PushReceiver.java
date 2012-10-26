@@ -56,7 +56,8 @@ import android.util.Log;
 public class PushReceiver extends BroadcastReceiver {
     private static final String TAG = "PushReceiver";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     private static final String[] ADDRESS_PROJECTION = new String[] {
         Mms.Addr.ADDRESS };

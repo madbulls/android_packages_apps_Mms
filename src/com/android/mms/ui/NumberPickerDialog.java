@@ -32,8 +32,6 @@ import com.android.mms.R;
  * A dialog that prompts the user for the message deletion limits.
  */
 public class NumberPickerDialog extends AlertDialog implements OnClickListener {
-    private int mInitialNumber;
-
     private static final String NUMBER = "number";
 
     /**
@@ -81,8 +79,6 @@ public class NumberPickerDialog extends AlertDialog implements OnClickListener {
             int title) {
         super(context, theme);
         mCallback = callBack;
-        mInitialNumber = number;
-
         setTitle(title);
 
         setButton(DialogInterface.BUTTON_POSITIVE, context.getText(R.string.set), this);
@@ -134,7 +130,6 @@ public class NumberPickerDialog extends AlertDialog implements OnClickListener {
             this(context, attrs, 0);
         }
 
-        @SuppressWarnings({"UnusedDeclaration"})
         public NonWrapNumberPicker(Context context, AttributeSet attrs, int defStyle) {
             super(context, attrs);
         }

@@ -29,7 +29,8 @@ import android.util.Log;
 public class MmsConfig {
     private static final String TAG = "MmsConfig";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     private static final String DEFAULT_HTTP_KEY_X_WAP_PROFILE = "x-wap-profile";
     private static final String DEFAULT_USER_AGENT = "Android-Mms/2.0";
@@ -204,12 +205,12 @@ public class MmsConfig {
     public static final void beginDocument(XmlPullParser parser, String firstElementName) throws XmlPullParserException, IOException
     {
         int type;
-        while ((type=parser.next()) != parser.START_TAG
-                   && type != parser.END_DOCUMENT) {
+        while ((type=parser.next()) != XmlPullParser.START_TAG
+                   && type != XmlPullParser.END_DOCUMENT) {
             ;
         }
 
-        if (type != parser.START_TAG) {
+        if (type != XmlPullParser.START_TAG) {
             throw new XmlPullParserException("No start tag found");
         }
 
@@ -222,8 +223,8 @@ public class MmsConfig {
     public static final void nextElement(XmlPullParser parser) throws XmlPullParserException, IOException
     {
         int type;
-        while ((type=parser.next()) != parser.START_TAG
-                   && type != parser.END_DOCUMENT) {
+        while ((type=parser.next()) != XmlPullParser.START_TAG
+                   && type != XmlPullParser.END_DOCUMENT) {
             ;
         }
     }

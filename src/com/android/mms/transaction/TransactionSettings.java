@@ -21,11 +21,9 @@ import android.database.sqlite.SqliteWrapper;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import com.android.internal.telephony.Phone;
 import android.provider.Telephony;
 import android.text.TextUtils;
-import android.util.Config;
 import android.util.Log;
 
 
@@ -36,9 +34,6 @@ import android.util.Log;
  */
 public class TransactionSettings {
     private static final String TAG = "TransactionSettings";
-    private static final boolean DEBUG = true;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
-
     private String mServiceCenter;
     private String mProxyAddress;
     private int mProxyPort = -1;
@@ -60,12 +55,16 @@ public class TransactionSettings {
      * @param context The context of the MMS Client
      */
     public TransactionSettings(Context context, String apnName) {
-        String selection = (apnName != null)?
-                Telephony.Carriers.APN + "='" + apnName.trim() + "'": null;
+        String selection = Telephony.Carriers.CURRENT + " IS NOT NULL";
+        String[] selectionArgs = null;
+        if (apnName != null) {
+            selection += " AND " + Telephony.Carriers.APN + "=?";
+            selectionArgs = new String[]{ apnName.trim() };
+        }
 
         Cursor cursor = SqliteWrapper.query(context, context.getContentResolver(),
-                            Uri.withAppendedPath(Telephony.Carriers.CONTENT_URI, "current"),
-                            APN_PROJECTION, selection, null, null);
+                            Telephony.Carriers.CONTENT_URI,
+                            APN_PROJECTION, selection, selectionArgs, null);
 
         if (cursor == null) {
             Log.e(TAG, "Apn is not found in Database!");

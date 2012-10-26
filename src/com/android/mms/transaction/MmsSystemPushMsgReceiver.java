@@ -31,15 +31,9 @@ package com.android.mms.transaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.Uri;
-import android.provider.Telephony.Mms;
 import android.util.Log;
 
-import com.android.internal.telephony.Phone;
-import com.android.internal.telephony.TelephonyIntents;
 import com.android.mms.LogTag;
-import com.google.android.mms.util.PduCache;
 
 /**
  * MmsSystemPushMsgReceiver receives the

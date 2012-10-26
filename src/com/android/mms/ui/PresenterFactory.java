@@ -39,8 +39,8 @@ public class PresenterFactory {
                 className = PRESENTER_PACKAGE + className;
             }
 
-            Class c = Class.forName(className);
-            Constructor constructor = c.getConstructor(
+            Class<?> c = Class.forName(className);
+            Constructor<?> constructor = c.getConstructor(
                     Context.class, ViewInterface.class, Model.class);
             return (Presenter) constructor.newInstance(context, view, model);
         } catch (ClassNotFoundException e) {

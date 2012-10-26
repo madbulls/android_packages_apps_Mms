@@ -136,14 +136,27 @@
     </PreferenceScreen>
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/pref_extra_settings">
-    <CheckBoxPreference android:key="pref_key_enable_emojis"
-                        android:title="@string/pref_title_enable_emojis"
-                        android:summary="@string/pref_summary_enable_emojis"
+    <CheckBoxPreference android:key="pref_key_mms_enable_sms_popup"
+                        android:title="@string/pref_title_mms_enable_sms_popup"
+                        android:summary="@string/pref_summary_mms_enable_sms_popup"
+                        android:defaultValue="true" />
+    <CheckBoxPreference android:key="pref_key_mms_hide_avatar"
+                        android:title="@string/pref_title_mms_hide_avatar"
+                        android:summary="@string/pref_summary_mms_hide_avatar"
                         android:defaultValue="false" />
     <CheckBoxPreference android:key="pref_key_mms_send_on_enter"
                         android:title="@string/pref_title_mms_send_on_enter"
                         android:summary="@string/pref_summary_mms_send_on_enter"
                         android:defaultValue="true" />
+    <CheckBoxPreference android:key="pref_key_strip_unicode"
+                        android:title="@string/pref_title_strip_unicode"
+                        android:summary="@string/pref_summary_strip_unicode"
+                        android:defaultValue="false" />
+    <CheckBoxPreference android:key="pref_key_enable_emojis"
+                        android:title="@string/pref_title_enable_emojis"
+                        android:summary="@string/pref_summary_enable_emojis"
+                        android:dependency="pref_key_strip_unicode"
+                        android:defaultValue="false" />
     <com.android.mms.preferences.UserAgentListPreference
                         android:key="pref_key_mms_user_agent"
                         android:defaultValue="default"
@@ -156,9 +169,17 @@
                         android:title="@string/pref_title_mms_back_to_all_threads"
                         android:summary="@string/pref_summary_mms_back_to_all_threads"
                         android:defaultValue="false" />
+    <CheckBoxPreference android:key="pref_key_mms_bubble_speech"
+                        android:title="@string/pref_title_mms_bubble_speech"
+                        android:summary="@string/pref_summary_mms_bubble_speech"
+                        android:defaultValue="false" />
     <CheckBoxPreference android:key="pref_key_mms_black_background"
                         android:title="@string/pref_title_mms_black_background"
                         android:summary="@string/pref_summary_mms_black_background"
+                        android:defaultValue="false" />
+    <CheckBoxPreference android:key="pref_key_mms_transparent_background"
+                        android:title="@string/pref_title_mms_transparent_background"
+                        android:summary="@string/pref_summary_mms_transparent_background"
                         android:defaultValue="false" />
     <CheckBoxPreference android:key="pref_key_show_counter_always"
                         android:title="@string/pref_title_show_counter_always"
@@ -188,10 +209,48 @@
                         android:entries="@array/pref_mms_message_font_size_entries"
                         android:entryValues="@array/pref_mms_message_font_size_values"
                         android:dialogTitle="@string/pref_dialogtitle_mms_message_font_size" />
+    <ListPreference android:key="pref_key_mms_convo_from_font_size"
+                        android:defaultValue="16"
+                        android:title="@string/pref_title_mms_convo_from_font_size"
+                        android:summary="@string/pref_summary_mms_convo_from_font_size"
+                        android:entries="@array/pref_mms_convo_from_font_size_entries"
+                        android:entryValues="@array/pref_mms_convo_from_font_size_values"
+                        android:dialogTitle="@string/pref_dialogtitle_mms_message_font_size" />
+    <ListPreference android:key="pref_key_mms_convo_subject_font_size"
+                        android:defaultValue="14"
+                        android:title="@string/pref_title_mms_convo_subject_font_size"
+                        android:summary="@string/pref_summary_mms_convo_subject_font_size"
+                        android:entries="@array/pref_mms_convo_subject_font_size_entries"
+                        android:entryValues="@array/pref_mms_convo_subject_font_size_values"
+                        android:dialogTitle="@string/pref_dialogtitle_mms_message_font_size" />
     <CheckBoxPreference android:key="pref_key_mms_email_addr_completion"
                         android:title="@string/pref_title_mms_email_addr_completion"
                         android:summary="@string/pref_summary_mms_email_addr_completion"
                         android:defaultValue="false" />
+    <!--<PreferenceScreen
+            android:key="smsmorse"
+            android:title="@string/smsmorse_title"
+            android:summary="@string/smsmorse_summary" >
+        <intent android:action="android.intent.action.MAIN"
+            android:targetPackage="com.android.smsmorse"
+            android:targetClass="com.android.smsmorse.ui.Preferences" />
+    </PreferenceScreen>
+    <PreferenceScreen
+            android:key="smsbarrage"
+            android:title="@string/smsbarrage_title"
+            android:summary="@string/smsbarrage_summary" >
+        <intent android:action="android.intent.action.MAIN"
+            android:targetPackage="com.cyanmobile.smsbarrage"
+            android:targetClass="com.cyanmobile.smsbarrage.ui.SMSBarrage" />
+    </PreferenceScreen>
+     <PreferenceScreen
+            android:key="smspopups"
+            android:title="@string/smspopups_title"
+            android:summary="@string/smspopups_summary" >
+        <intent android:action="android.intent.action.MAIN"
+            android:targetPackage="com.android.SmsPopup"
+            android:targetClass="com.android.SmsPopup.SmsPopup" />
+    </PreferenceScreen> -->
   </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/prefs_templates_settings">

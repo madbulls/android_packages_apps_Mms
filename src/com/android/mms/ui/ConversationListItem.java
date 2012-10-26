@@ -17,21 +17,15 @@
 
 package com.android.mms.ui;
 
-import java.util.List;
-
 import com.android.mms.R;
 import com.android.mms.data.Contact;
 import com.android.mms.data.ContactList;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 
 import android.os.Handler;
-import android.provider.ContactsContract.Intents;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -40,7 +34,6 @@ import android.text.style.TextAppearanceSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.QuickContactBadge;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -64,6 +57,7 @@ public class ConversationListItem extends RelativeLayout implements Contact.Upda
     private ImageView mPresenceView;
     private QuickContactBadge mAvatarView;
     private boolean mBlackBackground;
+    private boolean mTransparentBackground;
 
     static private Drawable sDefaultContactImage;
 
@@ -91,7 +85,9 @@ public class ConversationListItem extends RelativeLayout implements Contact.Upda
         super.onFinishInflate();
 
         mFromView = (TextView) findViewById(R.id.from);
+        mFromView.setTextSize(Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getContext()).getString(MessagingPreferenceActivity.CONVO_FROM_FONT_SIZE, "16")));
         mSubjectView = (TextView) findViewById(R.id.subject);
+        mSubjectView.setTextSize(Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getContext()).getString(MessagingPreferenceActivity.CONVO_SUBJECT_FONT_SIZE, "14")));
 
         mDateView = (TextView) findViewById(R.id.date);
         mAttachmentView = findViewById(R.id.attachment);
@@ -200,16 +196,21 @@ public class ConversationListItem extends RelativeLayout implements Contact.Upda
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         mBlackBackground = prefs.getBoolean(MessagingPreferenceActivity.BLACK_BACKGROUND, false);
+        mTransparentBackground = prefs.getBoolean(MessagingPreferenceActivity.TRANSPARENT_BACKGROUND, false);
 
         Drawable background;
-        if (!mBlackBackground) {
-            background = ch.isRead()?
-                mContext.getResources().getDrawable(R.drawable.conversation_item_background_read) :
-                mContext.getResources().getDrawable(R.drawable.conversation_item_background_unread);
-        } else {
+        if (mBlackBackground) {
             background = ch.isRead()?
                 mContext.getResources().getDrawable(R.drawable.conversation_item_background_read_black) :
                 mContext.getResources().getDrawable(R.drawable.conversation_item_background_unread_black);
+        } else if (mTransparentBackground) {
+            background = ch.isRead()?
+                mContext.getResources().getDrawable(R.drawable.conversation_item_background_read_transparent) :
+                mContext.getResources().getDrawable(R.drawable.conversation_item_background_unread_transparent);
+        } else {
+            background = ch.isRead()?
+                mContext.getResources().getDrawable(R.drawable.conversation_item_background_read) :
+                mContext.getResources().getDrawable(R.drawable.conversation_item_background_unread);
         }
 
         setBackgroundDrawable(background);

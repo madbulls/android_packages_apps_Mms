@@ -38,22 +38,21 @@ public class MessageStatusReceiver extends BroadcastReceiver {
     private static final String LOG_TAG = "MessageStatusReceiver";
     private static final Uri STATUS_URI =
             Uri.parse("content://sms/status");
-    private Context mContext;
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        mContext = context;
         if (MESSAGE_STATUS_RECEIVED_ACTION.equals(intent.getAction())) {
 
             Uri messageUri = intent.getData();
-            byte[] pdu = (byte[]) intent.getExtra("pdu");
+            @SuppressWarnings("deprecation")
+			byte[] pdu = (byte[]) intent.getExtra("pdu");
 
             SmsMessage message = updateMessageStatus(context, messageUri, pdu);
 
-            // Called on the UI thread so don't block.
-            if (message.getStatus() < Sms.STATUS_PENDING)
-                MessagingNotification.nonBlockingUpdateNewMessageIndicator(context,
-                        true, message.isStatusReportMessage());
+           // Called on a background thread, so it's OK to block.
+           if (message != null && message.getStatus() < Sms.STATUS_PENDING) {
+               MessagingNotification.blockingUpdateNewMessageIndicator(context,
+                   MessagingNotification.THREAD_NONE, message.isStatusReportMessage());
+           }
        }
     }
 

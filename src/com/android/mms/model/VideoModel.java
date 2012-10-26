@@ -43,7 +43,8 @@ import java.io.IOException;
 public class VideoModel extends RegionMediaModel {
     private static final String TAG = MediaModel.TAG;
     private static final boolean DEBUG = true;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     public VideoModel(Context context, Uri uri, RegionModel region)
             throws MmsException {
@@ -118,7 +119,9 @@ public class VideoModel extends RegionMediaModel {
     // EventListener Interface
     public void handleEvent(Event evt) {
         String evtType = evt.getType();
-        if (LOCAL_LOGV || Log.isLoggable(LogTag.APP, Log.VERBOSE)) {
+        if (LOCAL_LOGV) {
+            Log.v(TAG, "[VideoModel] handleEvent " + evt.getType() + " on " + this);
+        } else if (Log.isLoggable(LogTag.APP, Log.VERBOSE)) {
             Log.v(TAG, "[VideoModel] handleEvent " + evt.getType() + " on " + this);
         }
 

@@ -20,16 +20,11 @@ package com.android.mms.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.method.NumberKeyListener;
-import android.util.Config;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -55,10 +50,6 @@ public class EditSlideDurationActivity  extends Activity {
     private Bundle mState;
     //  State.
     private final static String STATE = "state";
-    private final static String TAG = "EditSlideDurationActivity";
-    private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
-
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);

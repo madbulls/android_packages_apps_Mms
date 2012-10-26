@@ -27,7 +27,8 @@ import android.util.Log;
 public class DefaultRetryScheme extends AbstractRetryScheme {
     private static final String TAG = "DefaultRetryScheme";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     private static final int[] sDefaultRetryScheme = {
         0, 1 * 60 * 1000, 5 * 60 * 1000, 10 * 60 * 1000, 30 * 60 * 1000};

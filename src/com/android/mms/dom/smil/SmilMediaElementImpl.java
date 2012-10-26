@@ -36,7 +36,8 @@ public class SmilMediaElementImpl extends SmilElementImpl implements
     public final static String SMIL_MEDIA_SEEK_EVENT = "SmilMediaSeek";
     private final static String TAG = "Mms:smil";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     ElementTime mElementTime = new ElementTimeImpl(this) {
             private Event createEvent(String eventType) {

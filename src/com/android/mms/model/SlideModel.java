@@ -38,7 +38,8 @@ import java.util.ListIterator;
 public class SlideModel extends Model implements List<MediaModel>, EventListener {
     public static final String TAG = "Mms/slideshow";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
     private static final int DEFAULT_SLIDE_DURATION = 5000;
 
     private final ArrayList<MediaModel> mMedia = new ArrayList<MediaModel>();

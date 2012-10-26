@@ -7,18 +7,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-
 import android.content.ContentUris;
 import android.content.Context;
-import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Handler;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.Presence;
@@ -33,6 +29,7 @@ import android.database.sqlite.SqliteWrapper;
 import com.android.mms.ui.MessageUtils;
 import com.android.mms.LogTag;
 
+@SuppressWarnings("deprecation")
 public class Contact {
     private static final String TAG = "Contact";
     private static final boolean V = false;
@@ -47,16 +44,6 @@ public class Contact {
 //            invalidateCache();
 //        }
 //    };
-
-    private static final ContentObserver sPresenceObserver = new ContentObserver(new Handler()) {
-        @Override
-        public void onChange(boolean selfUpdate) {
-            if (Log.isLoggable(LogTag.APP, Log.VERBOSE)) {
-                log("presence changed, invalidate cache");
-            }
-            invalidateCache();
-        }
-    };
 
     private final static HashSet<UpdateListener> mListeners = new HashSet<UpdateListener>();
 
@@ -200,10 +187,6 @@ public class Contact {
         return mNameAndNumber;
     }
 
-    private synchronized void updateNameAndNumber() {
-       notSynchronizedUpdateNameAndNumber();
-    }
-
     private void notSynchronizedUpdateNameAndNumber() {
         mNameAndNumber = formatNameAndNumber(mName, mNumber);
     }
@@ -291,8 +274,6 @@ public class Contact {
 
     private static class ContactsCache {
         private final TaskStack mTaskQueue = new TaskStack();
-        private static final String SEPARATOR = ";";
-
         // query params for caller id lookup
         private static final String CALLER_ID_SELECTION = "PHONE_NUMBERS_EQUAL(" + Phone.NUMBER
                 + ",?) AND " + Data.MIMETYPE + "='" + Phone.CONTENT_ITEM_TYPE + "'"
@@ -313,7 +294,6 @@ public class Contact {
                 Phone.CONTACT_STATUS,           // 5
         };
 
-        private static final int PHONE_NUMBER_COLUMN = 0;
         private static final int PHONE_LABEL_COLUMN = 1;
         private static final int CONTACT_NAME_COLUMN = 2;
         private static final int CONTACT_ID_COLUMN = 3;
@@ -499,7 +479,8 @@ public class Contact {
             return false;
         }
 
-        private void updateContact(final Contact c) {
+        @SuppressWarnings("unchecked")
+		private void updateContact(final Contact c) {
             if (c == null) {
                 return;
             }

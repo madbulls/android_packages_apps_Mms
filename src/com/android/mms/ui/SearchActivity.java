@@ -68,6 +68,7 @@ public class SearchActivity extends ListActivity
 
     private SharedPreferences mPrefs;
     private boolean mBlackBackground;
+    private boolean mTransparentBackground;
 
     // Track which TextView's show which Contact objects so that we can update
     // appropriately when the Contact gets fully loaded.
@@ -216,11 +217,14 @@ public class SearchActivity extends ListActivity
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mBlackBackground = mPrefs.getBoolean(MessagingPreferenceActivity.BLACK_BACKGROUND, false);
+        mTransparentBackground = mPrefs.getBoolean(MessagingPreferenceActivity.TRANSPARENT_BACKGROUND, false);
 
-        if (!mBlackBackground) {
-            setContentView(R.layout.search_activity);
-        } else {
+        if (mBlackBackground) {
             setContentView(R.layout.search_activity_black);
+        } else if (mTransparentBackground) {
+            setContentView(R.layout.search_activity_transparent);
+        } else {
+            setContentView(R.layout.search_activity);
         }
 
         String searchStringParameter = getIntent().getStringExtra(SearchManager.QUERY);
@@ -306,6 +310,8 @@ public class SearchActivity extends ListActivity
 
                         if (mBlackBackground) {
                             v = inflater.inflate(R.layout.search_item_black, parent, false);
+                        } else if (mTransparentBackground) {
+                            v = inflater.inflate(R.layout.search_item_transparent, parent, false);
                         }
                         return v;
                     }

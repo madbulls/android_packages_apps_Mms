@@ -43,7 +43,8 @@ import java.util.Map;
 public class AudioModel extends MediaModel {
     private static final String TAG = MediaModel.TAG;
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     private final HashMap<String, String> mExtras;
 

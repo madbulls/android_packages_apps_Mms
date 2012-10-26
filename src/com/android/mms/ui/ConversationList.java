@@ -41,7 +41,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteFullException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -71,8 +70,6 @@ public class ConversationList extends ListActivity
             implements DraftCache.OnDraftChangedListener {
     private static final String TAG = "ConversationList";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG;
-
     private static final int THREAD_LIST_QUERY_TOKEN       = 1701;
     public static final int DELETE_CONVERSATION_TOKEN      = 1801;
     public static final int HAVE_LOCKED_MESSAGES_TOKEN     = 1802;
@@ -96,25 +93,38 @@ public class ConversationList extends ListActivity
     private CharSequence mTitle;
     private SharedPreferences mPrefs;
     private Handler mHandler;
-    private boolean mNeedToMarkAsSeen;
+    private boolean mNeedToRemoveObsoleteThreads;
     private boolean mBlackBackground;
-
+    private boolean mTransparentBackground;
+    private ActionBar mActionBar;
     static private final String CHECKED_MESSAGE_LIMITS = "checked_message_limits";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS | Window.FEATURE_CUSTOM_TITLE);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mBlackBackground = mPrefs.getBoolean(MessagingPreferenceActivity.BLACK_BACKGROUND, false);
+        mTransparentBackground = mPrefs.getBoolean(MessagingPreferenceActivity.TRANSPARENT_BACKGROUND, false);
 
-        if (!mBlackBackground) {
-          setContentView(R.layout.conversation_list_screen);
-        } else {
+        if (mBlackBackground) {
           setContentView(R.layout.conversation_list_screen_black);
+        } else if (mTransparentBackground) {
+          setContentView(R.layout.conversation_list_screen_transparent);
+        } else {
+          setContentView(R.layout.conversation_list_screen);
         }
+
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
+        mActionBar = (ActionBar) findViewById(R.id.actionBar);
+        mActionBar.setTitle(R.string.app_label);
+        mActionBar.setHomeLogo(R.drawable.ic_launcher_smsmms, new View.OnClickListener() {
+                  public void onClick(View v) {
+                        finish();
+                  }
+        });
 
         mQueryHandler = new ThreadListQueryHandler(getContentResolver());
 
@@ -126,6 +136,9 @@ public class ConversationList extends ListActivity
         if (mBlackBackground) {
             headerView = (ConversationListItem)
                     inflater.inflate(R.layout.conversation_list_item_black, listView, false);
+        } else if (mTransparentBackground) {
+            headerView = (ConversationListItem)
+                    inflater.inflate(R.layout.conversation_list_item_transparent, listView, false);
         }
 
         headerView.bind(getString(R.string.new_message),
@@ -236,7 +249,7 @@ public class ConversationList extends ListActivity
 
         DraftCache.getInstance().addOnDraftChangedListener(this);
 
-        mNeedToMarkAsSeen = true;
+        mNeedToRemoveObsoleteThreads = true;
 
         startAsyncQuery();
 
@@ -593,9 +606,9 @@ public class ConversationList extends ListActivity
                 setTitle(mTitle);
                 setProgressBarIndeterminateVisibility(false);
 
-                if (mNeedToMarkAsSeen) {
-                    mNeedToMarkAsSeen = false;
-                    Conversation.markAllConversationsAsSeen(getApplicationContext());
+                Conversation.markAllConversationsAsSeen(getApplicationContext());
+                if (mNeedToRemoveObsoleteThreads) {
+                    mNeedToRemoveObsoleteThreads = false;
 
                     // Delete any obsolete threads. Obsolete threads are threads that aren't
                     // referenced by at least one message in the pdu or sms tables.
@@ -627,7 +640,7 @@ public class ConversationList extends ListActivity
                 // Update the notification for new messages since they
                 // may be deleted.
                 MessagingNotification.nonBlockingUpdateNewMessageIndicator(ConversationList.this,
-                        false, false);
+                        MessagingNotification.THREAD_NONE, false);
                 // Update the notification for failed messages since they
                 // may be deleted.
                 MessagingNotification.updateSendFailedNotification(ConversationList.this);

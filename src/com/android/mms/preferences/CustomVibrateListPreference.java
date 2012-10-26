@@ -1,6 +1,5 @@
 package com.android.mms.preferences;
  
-import com.android.mms.MmsConfig;
 import com.android.mms.R;
 import com.android.mms.ui.MessagingPreferenceActivity;
  
@@ -18,11 +17,9 @@ import android.preference.ListPreference;
 import android.preference.PreferenceManager;
 import android.widget.SeekBar;
 import android.widget.EditText;
-import android.widget.Toast;
  
 public class CustomVibrateListPreference extends ListPreference {
     private Context mContext;
-    private String mCustomVibrate;
     private boolean mDialogShowing;
     private EditText mCustomVibrateOption;
  

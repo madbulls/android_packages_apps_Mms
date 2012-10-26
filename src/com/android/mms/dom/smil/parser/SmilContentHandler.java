@@ -31,7 +31,8 @@ import com.android.mms.dom.smil.SmilDocumentImpl;
 public class SmilContentHandler extends DefaultHandler {
     private static final String TAG = "SmilContentHandler";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     private SMILDocument mSmilDocument;
     private Node mCurrentNode;

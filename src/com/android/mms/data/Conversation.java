@@ -954,7 +954,7 @@ public class Conversation {
         return true;
     }
 
-    private static String getRecipients(Uri uri) {
+    public static String getRecipients(Uri uri) {
         String base = uri.getSchemeSpecificPart();
         int pos = base.indexOf('?');
         return (pos == -1) ? base : base.substring(0, pos);

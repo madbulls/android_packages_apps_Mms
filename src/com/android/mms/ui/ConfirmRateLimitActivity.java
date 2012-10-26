@@ -37,7 +37,8 @@ import android.widget.Button;
 public class ConfirmRateLimitActivity extends Activity {
     private static final String TAG = "ConfirmRateLimitActivity";
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     private long mCreateTime;
     private Handler mHandler;

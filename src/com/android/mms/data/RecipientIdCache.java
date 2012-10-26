@@ -19,7 +19,6 @@ import com.android.mms.LogTag;
 import android.database.sqlite.SqliteWrapper;
 
 public class RecipientIdCache {
-    private static final boolean LOCAL_DEBUG = false;
     private static final String TAG = "Mms/cache";
 
     private static Uri sAllCanonical =

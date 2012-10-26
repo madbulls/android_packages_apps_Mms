@@ -69,6 +69,7 @@
         <item>Smirk</item>                   <!-- 19: :-/ -->
         <item>Poker face</item>              <!-- 20: :-I -->
     </string-array>
+
     <string-array name="pref_mms_user_agent_entries">
         <item>Default Android</item>
         <item>Nokia N95</item>
@@ -103,6 +104,42 @@
         <item>16</item>
         <item>18</item>
         <item>20</item>
+  </string-array>
+
+  <string-array name="pref_mms_convo_from_font_size_entries">
+         <item>10</item>
+         <item>12</item>
+         <item>14</item>
+         <item>16 (Default)</item>
+         <item>18 </item>
+         <item>20</item>
+  </string-array>
+
+   <string-array translatable="false" name="pref_mms_convo_from_font_size_values">
+         <item>10</item>
+         <item>12</item>
+         <item>14</item>
+         <item>16</item>
+         <item>18</item>
+         <item>20</item>
+  </string-array>
+
+  <string-array name="pref_mms_convo_subject_font_size_entries">
+         <item>10</item>
+         <item>12</item>
+         <item>14</item>
+         <item>16 (Default)</item>
+         <item>18 </item>
+         <item>20</item>
+  </string-array>
+
+   <string-array translatable="false" name="pref_mms_convo_subject_font_size_values">
+         <item>10</item>
+         <item>12</item>
+         <item>14</item>
+         <item>16</item>
+         <item>18</item>
+         <item>20</item>
   </string-array>
 
     <string-array name="pref_mms_notification_vibrate_pattern_entries">

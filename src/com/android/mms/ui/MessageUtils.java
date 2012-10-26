@@ -60,7 +60,6 @@ import android.os.Handler;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Sms;
 import android.telephony.PhoneNumberUtils;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.format.Time;
@@ -105,7 +104,7 @@ public class MessageUtils {
         '-', '.', ',', '(', ')', ' ', '/', '\\', '*', '#', '+'
     };
 
-    private static HashMap numericSugarMap = new HashMap (NUMERIC_CHARS_SUGAR.length);
+    private static HashMap<Character, Character> numericSugarMap = new HashMap<Character, Character> (NUMERIC_CHARS_SUGAR.length);
 
     static {
         for (int i = 0; i < NUMERIC_CHARS_SUGAR.length; i++) {

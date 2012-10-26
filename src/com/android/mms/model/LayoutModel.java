@@ -28,7 +28,8 @@ import java.util.ArrayList;
 public class LayoutModel extends Model {
     private static final String TAG = SlideModel.TAG;
     private static final boolean DEBUG = false;
-    private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
+    @SuppressWarnings("deprecation")
+	private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
     public static final String IMAGE_REGION_ID = "Image";
     public static final String TEXT_REGION_ID  = "Text";
